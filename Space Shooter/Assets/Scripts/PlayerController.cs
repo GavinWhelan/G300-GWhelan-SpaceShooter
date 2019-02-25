@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
     public Boundary boundary;
     public float tilt;
 
+    // Fires a bolt on mouse click
+    private void Update()
+    {
+        Instantiate(object, position, rotation);
+    }
+
     // Controls player position
     private void FixedUpdate()
     {
