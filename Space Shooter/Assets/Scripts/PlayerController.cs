@@ -14,10 +14,19 @@ public class PlayerController : MonoBehaviour
     public Boundary boundary;
     public float tilt;
 
+    public GameObject shot;
+    public Transform shotSpawn;
+    public float fireRate = 0.5f;
+    private float nextFire = 0.0f;
+
     // Fires a bolt on mouse click
     private void Update()
     {
-        Instantiate(object, position, rotation);
+        if (Input.GetButton("Fire1") && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+        }
     }
 
     // Controls player position
