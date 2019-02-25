@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using TMPro;
+
 public class GameController : MonoBehaviour
 {
     public GameObject hazard;
@@ -11,11 +13,18 @@ public class GameController : MonoBehaviour
     public float startWait;
     public float waveWait;
 
+    public TMP_Text scoreText;
+    private int score;
+
+    // Sets score to 0, and begins to start spawning waves
     private void Start()
     {
+        score = 0;
+        UpdateScore();
         StartCoroutine(SpawnWaves());
     }
 
+    // Spawns obstacles in waves, with delays in between waves
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
@@ -29,5 +38,17 @@ public class GameController : MonoBehaviour
             }
             yield return new WaitForSeconds(waveWait);
         }
+    }
+
+    // Adds to the game score
+    public void AddScore(int newScoreValue)
+    {
+        score += newScoreValue;
+        UpdateScore();
+    }
+
+    void UpdateScore()
+    {
+        scoreText.text = "Score: " + score;
     }
 }
