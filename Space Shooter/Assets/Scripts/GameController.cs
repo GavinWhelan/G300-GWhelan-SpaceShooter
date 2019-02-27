@@ -8,6 +8,7 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public GameObject hazard;
+    public GameObject pickup;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
@@ -45,11 +46,12 @@ public class GameController : MonoBehaviour
         }
     }
 
-    // Spawns obstacles in waves, with delays in between waves
+    // Spawns obstacles in waves, with delays in between waves; also spawns a pickup at the end of the wave
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
         while (true) {
+            // Spawn a number of hazards equal to hazardCount
             for (int i = 0; i < hazardCount; i++)
             {
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
@@ -57,8 +59,12 @@ public class GameController : MonoBehaviour
                 Instantiate(hazard, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds(spawnWait);
             }
+
+            // Spawn a pickup
+            Instantiate(pickup, new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z), Quaternion.identity);
             yield return new WaitForSeconds(waveWait);
 
+            // Restart text waits until the end of the current spawn wave, for finality
             if (gameOver)
             {
                 restartText.text = "Press 'R' for restart";
