@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DestroyByBoundary : MonoBehaviour
 {
+    // Destroys object when it leaves the box collider
     private void OnTriggerExit(Collider other)
     {
         Destroy(other.gameObject);
