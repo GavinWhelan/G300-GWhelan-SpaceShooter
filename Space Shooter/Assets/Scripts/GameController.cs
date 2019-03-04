@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
         playerObject = GameObject.FindWithTag("Player");
         if (playerObject == null)
         {
-            Debug.Log("Cannot find 'GameController' script");
+            Debug.Log("Cannot find Player object");
         }
     }
 
