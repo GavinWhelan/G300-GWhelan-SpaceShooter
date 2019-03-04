@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject hazard;
     public GameObject pickup;
+    public GameObject playerExplosion;
     public Vector3 spawnValues;
     public int hazardCount;
     public float spawnWait;
@@ -18,23 +19,35 @@ public class GameController : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text restartText;
     public TMP_Text gameOverText;
-    private TMP_Text healthText;
+    public TMP_Text healthText;
 
     private bool gameOver;
     private bool restart;
     private int score;
     public int health;
 
-    // Sets score to 0, and begins to start spawning waves
+    private GameObject playerObject;
+
+    // Sets score to 0 and health to 100, and starts spawning waves
     private void Start()
     {
         gameOver = false;
         restart = false;
-        restartText.text = "";
         gameOverText.text = "";
+        restartText.text = "";
         score = 0;
         UpdateScore();
+        health = 100;
+        UpdateHealth();
         StartCoroutine(SpawnWaves());
+
+
+        // Find the Player object
+        playerObject = GameObject.FindWithTag("Player");
+        if (playerObject == null)
+        {
+            Debug.Log("Cannot find 'GameController' script");
+        }
     }
 
     private void Update()
@@ -110,6 +123,7 @@ public class GameController : MonoBehaviour
         {
             health += newHealthValue;
         }
+        UpdateHealth();
     }
 
     void UpdateHealth()
@@ -117,7 +131,9 @@ public class GameController : MonoBehaviour
         healthText.text = "Health: " + health;
         if (health == 0)
         {
-
+            Destroy(playerObject.gameObject);
+            Instantiate(playerExplosion, playerObject.transform.position, playerObject.transform.rotation);
+            GameOver();
         }
     }
 }
