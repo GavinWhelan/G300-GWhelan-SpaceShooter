@@ -18,10 +18,12 @@ public class GameController : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text restartText;
     public TMP_Text gameOverText;
+    private TMP_Text healthText;
 
     private bool gameOver;
     private bool restart;
     private int score;
+    public int health;
 
     // Sets score to 0, and begins to start spawning waves
     private void Start()
@@ -90,5 +92,32 @@ public class GameController : MonoBehaviour
     {
         gameOverText.text = "Game over!";
         gameOver = true;
+    }
+
+    public void DamagePlayer(int newHealthValue)
+    {
+        health -= newHealthValue;
+        UpdateHealth();
+    }
+
+    public void HealPlayer(int newHealthValue)
+    {
+        if(health + newHealthValue >= 100)
+        {
+            health = 100;
+        }
+        else
+        {
+            health += newHealthValue;
+        }
+    }
+
+    void UpdateHealth()
+    {
+        healthText.text = "Health: " + health;
+        if (health == 0)
+        {
+
+        }
     }
 }
