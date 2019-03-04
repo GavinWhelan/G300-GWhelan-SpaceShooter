@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [System.Serializable]
 public class Boundary
@@ -18,6 +19,16 @@ public class PlayerController : MonoBehaviour
     public Transform shotSpawn;
     public float fireRate = 0.5f;
     private float nextFire = 0.0f;
+
+    public int health;
+    private TMP_Text healthText;
+
+    private void Start()
+    {
+        health = 100;
+        UpdateHealth();
+
+    }
 
     // Fires a bolt on mouse click
     private void Update()
@@ -47,5 +58,10 @@ public class PlayerController : MonoBehaviour
         );
 
         GetComponent<Rigidbody>().rotation = Quaternion.Euler(0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
+    }
+
+    void UpdateHealth()
+    {
+        healthText.text = "Health: " + health;
     }
 }
