@@ -74,6 +74,8 @@ public class GameController : MonoBehaviour
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 float typeProbability = Random.Range(0.0f, 10.0f);
                 Quaternion spawnRotation = Quaternion.identity;
+
+                // Choose what type of hazard to spawn
                 if(typeProbability <= 8.0f)
                 {
                     hazard = asteroidHazard;
@@ -83,6 +85,7 @@ public class GameController : MonoBehaviour
                     hazard = enemyHazard;
                 }
 
+                // Make that thang happen
                 Instantiate(hazard, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds(spawnWait);
             }
@@ -90,6 +93,12 @@ public class GameController : MonoBehaviour
             // Spawn a pickup
             Instantiate(pickup, new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z), Quaternion.identity);
             yield return new WaitForSeconds(waveWait);
+
+            // Spawn a formation of enemies HERE IS THE THING YOU WERE WORKING ON!!!!!!!
+            for (int i=0; i <= 5; i++)
+            {
+                Vector3 spawnPosition = 
+            }
 
             // Restart text waits until the end of the current spawn wave, for finality
             if (gameOver)
@@ -141,8 +150,9 @@ public class GameController : MonoBehaviour
     void UpdateHealth()
     {
         healthText.text = "Health: " + health;
-        if (health == 0)
+        if (health <= 0)
         {
+            healthText.text = "Health: 0";
             Destroy(playerObject.gameObject);
             Instantiate(playerExplosion, playerObject.transform.position, playerObject.transform.rotation);
             GameOver();
