@@ -33,7 +33,10 @@ public class DestroyByContact : MonoBehaviour
             {
                 return;
             }
-            Instantiate(explosion, transform.position, transform.rotation);
+            if (this.tag != "EnemyBolt")
+            {
+                Instantiate(explosion, transform.position, transform.rotation);
+            }
             if (other.tag == "Player")
             {
                 // Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
