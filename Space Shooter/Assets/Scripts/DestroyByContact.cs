@@ -8,6 +8,7 @@ public class DestroyByContact : MonoBehaviour
     public GameObject playerExplosion;
     public int scoreValue;
     private GameController gameController;
+    public int damageValue = 50;
 
     // Find GameController by tag
     private void Start()
@@ -36,7 +37,7 @@ public class DestroyByContact : MonoBehaviour
             if (other.tag == "Player")
             {
                 // Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
-                gameController.DamagePlayer(10);
+                gameController.DamagePlayer(damageValue);
             }
             else
             {
