@@ -7,7 +7,9 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject hazard;
+    public GameObject asteroidHazard;
+    public GameObject enemyHazard;
+    private GameObject hazard;
     public GameObject pickup;
     public GameObject playerExplosion;
     public Vector3 spawnValues;
@@ -70,7 +72,17 @@ public class GameController : MonoBehaviour
             for (int i = 0; i < hazardCount; i++)
             {
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+                float typeProbability = Random.Range(0.0f, 10.0f);
                 Quaternion spawnRotation = Quaternion.identity;
+                if(typeProbability <= 8.0f)
+                {
+                    hazard = asteroidHazard;
+                }
+                else
+                {
+                    hazard = enemyHazard;
+                }
+
                 Instantiate(hazard, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds(spawnWait);
             }
