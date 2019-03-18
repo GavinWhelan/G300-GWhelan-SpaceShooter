@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{28FCF307-BCEB-DF00-C466-08C29A16E02D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Complete-Game/Scripts/Done_EvasiveManeuver.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Pickup.cs">
     <Files>
       <File FileName="Assets/Scripts/PlayerController.cs" Line="29" Column="48" />
       <File FileName="Assets/Scripts/Mover.cs" Line="9" Column="27" />
@@ -9,6 +9,7 @@
       <File FileName="Assets/Scripts/GameController.cs" Line="25" Column="25" />
       <File FileName="Assets/Scripts/DestroyByTime.cs" Line="9" Column="58" />
       <File FileName="Assets/_Complete-Game/Scripts/Done_EvasiveManeuver.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Pickup.cs" Line="27" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

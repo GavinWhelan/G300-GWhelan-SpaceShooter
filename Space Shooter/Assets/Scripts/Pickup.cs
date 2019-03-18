@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     private GameController gameController;
+    public int healValue = 10;
 
     private void Start()
     {
@@ -24,7 +25,7 @@ public class Pickup : MonoBehaviour
         if(other.tag == "Player")
         {
             Destroy(gameObject);
-            gameController.HealPlayer(20);
+            gameController.HealPlayer(healValue);
         }
     }
 }
