@@ -24,7 +24,7 @@ public class DestroyByContact : MonoBehaviour
         }
     }
 
-    // Destroys asteroid and anything that came into contact with it
+    // Destroys obstacle and anything that came into contact with it
     void OnTriggerEnter(Collider other)
     {
         if (other.tag != "Pickup")
