@@ -50,13 +50,11 @@ public class PlayerController : MonoBehaviour
         {
             if (torpedoReady == false)
             {
-                //torpedoText.text = "";
-                Debug.Log("Yeet!");
+                torpedoText.text = "Loading Torpedo...";
             }
             else
             {
                 torpedoText.text = "Torpedo Ready";
-                Debug.Log("Rumble bumble");
             }
         }
 
@@ -74,7 +72,7 @@ public class PlayerController : MonoBehaviour
         }
         if (torpedoObject == null && torpedoTutorialMid == true && torpedoTutorialEnd == false)
         {
-            //torpedoText.text = "";
+            torpedoText.text = "";
             torpedoTutorialEnd = true;
         }
     }

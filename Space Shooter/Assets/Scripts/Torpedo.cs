@@ -20,7 +20,7 @@ public class Torpedo : MonoBehaviour
     {
         isExploding = true;
         GetComponent<Rigidbody>().velocity = transform.forward * 0.0f;
-        Sequence explosion = DOTween.Sequence(); 
+        Sequence explosion = DOTween.Sequence();
         explosion.Append(transform.DOScale(10.0f, 1));
         explosion.Join(transform.DOShakePosition(0.1f, 0.1f));
         explosion.AppendInterval(0.1f);
