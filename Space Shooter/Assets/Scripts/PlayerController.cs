@@ -38,18 +38,26 @@ public class PlayerController : MonoBehaviour
             GetComponent<AudioSource>().Play();
         }
 
-        if (torpedoTutorialEnd == true)
-        {
-            torpedoText.text = "Torpedo Ready";
-           
-        }
         if (Input.GetButton("Fire2") && Time.time > nextFire && GameObject.FindWithTag("Torpedo") == null && torpedoReady == true)
         {
             nextFire = Time.time + fireRate;
             Instantiate(bomb, shotSpawn.position, shotSpawn.rotation);
             GetComponent<AudioSource>().Play();
-            torpedoReady = false;
             StartCoroutine(TorpedoTimer());
+        }
+
+        if (torpedoTutorialEnd == true)
+        {
+            if (torpedoReady == false)
+            {
+                //torpedoText.text = "";
+                Debug.Log("Yeet!");
+            }
+            else
+            {
+                torpedoText.text = "Torpedo Ready";
+                Debug.Log("Rumble bumble");
+            }
         }
 
         // The torpedo tutorial
@@ -59,14 +67,14 @@ public class PlayerController : MonoBehaviour
             torpedoText.text = "RIGHT CLICK to FIRE a TORPEDO";
             torpedoTutorialStart = true;
         }
-        if (torpedoObject != null && torpedoTutorialEnd == false)
+        if (torpedoObject != null && torpedoTutorialMid == false)
         {
             torpedoText.text = "RIGHT CLICK AGAIN to TRIGGER the TORPEDO";
             torpedoTutorialMid = true;
         }
-        if (torpedoObject == null && torpedoTutorialMid == true)
+        if (torpedoObject == null && torpedoTutorialMid == true && torpedoTutorialEnd == false)
         {
-            torpedoText.text = "";
+            //torpedoText.text = "";
             torpedoTutorialEnd = true;
         }
     }
@@ -92,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator TorpedoTimer()
     {
-        torpedoText.text = "Torpedo Ready";
+        torpedoReady = false;
         yield return new WaitForSeconds(5.0f);
         torpedoReady = true;
     }
