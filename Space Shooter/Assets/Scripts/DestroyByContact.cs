@@ -45,6 +45,9 @@ public class DestroyByContact : MonoBehaviour
             {
                 // Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
                 gameController.DamagePlayer(damageValue);
+            } else if (other.tag == "Torpedo")
+            {
+
             }
             else
             {
