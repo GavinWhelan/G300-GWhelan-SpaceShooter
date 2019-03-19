@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [System.Serializable]
 public class Boundary
@@ -13,6 +14,13 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Boundary boundary;
     public float tilt;
+
+    private GameObject torpedoObject;
+    public TMP_Text torpedoText;
+    private bool torpedoTutorialStart = false;
+    private bool torpedoTutorialMid = false;
+    private bool torpedoTutorialEnd = false;
+    private bool torpedoReady = true;
 
     public GameObject shot;
     public GameObject bomb;
@@ -29,10 +37,37 @@ public class PlayerController : MonoBehaviour
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
             GetComponent<AudioSource>().Play();
         }
-        if (Input.GetButton("Fire2") && Time.time > nextFire && GameObject.FindWithTag("Torpedo") == null)
+
+        if (torpedoTutorialEnd == true)
+        {
+            torpedoText.text = "Torpedo Ready";
+           
+        }
+        if (Input.GetButton("Fire2") && Time.time > nextFire && GameObject.FindWithTag("Torpedo") == null && torpedoReady == true)
         {
             nextFire = Time.time + fireRate;
             Instantiate(bomb, shotSpawn.position, shotSpawn.rotation);
+            GetComponent<AudioSource>().Play();
+            torpedoReady = false;
+            StartCoroutine(TorpedoTimer());
+        }
+
+        // The torpedo tutorial
+        torpedoObject = GameObject.FindWithTag("Torpedo");
+        if (torpedoTutorialStart == false)
+        {
+            torpedoText.text = "RIGHT CLICK to FIRE a TORPEDO";
+            torpedoTutorialStart = true;
+        }
+        if (torpedoObject != null && torpedoTutorialEnd == false)
+        {
+            torpedoText.text = "RIGHT CLICK AGAIN to TRIGGER the TORPEDO";
+            torpedoTutorialMid = true;
+        }
+        if (torpedoObject == null && torpedoTutorialMid == true)
+        {
+            torpedoText.text = "";
+            torpedoTutorialEnd = true;
         }
     }
 
@@ -53,5 +88,12 @@ public class PlayerController : MonoBehaviour
         );
 
         GetComponent<Rigidbody>().rotation = Quaternion.Euler(0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
+    }
+
+    IEnumerator TorpedoTimer()
+    {
+        torpedoText.text = "Torpedo Ready";
+        yield return new WaitForSeconds(5.0f);
+        torpedoReady = true;
     }
 }

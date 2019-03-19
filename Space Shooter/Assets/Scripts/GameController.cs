@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public TMP_Text restartText;
     public TMP_Text gameOverText;
     public TMP_Text healthText;
+    public TMP_Text torpedoText;
 
     private bool gameOver;
     private bool restart;
@@ -30,6 +31,11 @@ public class GameController : MonoBehaviour
     public int health;
 
     private GameObject playerObject;
+    private GameObject torpedoObject;
+
+    private bool torpedoTutorialStart;
+    private bool torpedoTutorialStageOne;
+    private bool torpedoTutorial3;
 
     // Sets score to 0 and health to 100, and starts spawning waves
     private void Start()
@@ -41,6 +47,9 @@ public class GameController : MonoBehaviour
         score = 0;
         UpdateScore();
         health = 100;
+        torpedoTutorialStart = false;
+        torpedoTutorialStageOne = false;
+        torpedoTutorial3 = false;
         UpdateHealth();
         StartCoroutine(SpawnWaves());
 
@@ -61,6 +70,22 @@ public class GameController : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+        }
+
+        torpedoObject = GameObject.FindWithTag("Torpedo");
+        if(torpedoTutorialStart == false)
+        {
+            torpedoText.text = "RIGHT CLICK to FIRE a TORPEDO";
+            torpedoTutorialStart = true;
+        }
+        if (torpedoObject != null && torpedoTutorialStageOne == false)
+        {
+            torpedoText.text = "RIGHT CLICK AGAIN to TRIGGER the TORPEDO";
+            torpedoTutorialStageOne = true;
+        }
+        if (torpedoObject == null && torpedoTutorialStageOne == true)
+        {
+            torpedoText.text = "";
         }
     }
 
