@@ -8,7 +8,8 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public GameObject asteroidHazard;
-    public GameObject enemyHazard;
+    public GameObject enemyHazardRandom;
+    public GameObject enemyHazardFormation;
     private GameObject hazard;
     public GameObject pickup;
     public GameObject playerExplosion;
@@ -82,7 +83,7 @@ public class GameController : MonoBehaviour
                 }
                 else
                 {
-                    hazard = enemyHazard;
+                    hazard = enemyHazardRandom;
                 }
 
                 // Make that thang happen
@@ -94,10 +95,25 @@ public class GameController : MonoBehaviour
             Instantiate(pickup, new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z), Quaternion.identity);
             yield return new WaitForSeconds(waveWait);
 
-            // Spawn a formation of enemies HERE IS THE THING YOU WERE WORKING ON!!!!!!!
-            for (int i=0; i <= 5; i++)
+            // Spawn a formation of enemies
+            float formationFactor = 5.0f;
+            for (int i=0; i <= 4; i++)
             {
-                Vector3 spawnPosition = 
+                if(i == 0 || i == 4)
+                {
+                    SpawnAtPosition(0.0f * formationFactor, enemyHazardFormation);
+                } else if(i == 1 || i == 3)
+                {
+                    SpawnAtPosition(0.7071f * formationFactor, enemyHazardFormation);
+                    SpawnAtPosition(-0.7071f * formationFactor, enemyHazardFormation);
+                }
+                else
+                {
+                    SpawnAtPosition(1.0f * formationFactor, enemyHazardFormation);
+                    SpawnAtPosition(-1.0f * formationFactor, enemyHazardFormation);
+                }
+                yield return new WaitForSeconds(spawnWait);
+
             }
 
             // Restart text waits until the end of the current spawn wave, for finality
@@ -157,5 +173,13 @@ public class GameController : MonoBehaviour
             Instantiate(playerExplosion, playerObject.transform.position, playerObject.transform.rotation);
             GameOver();
         }
+    }
+
+    // Spawns a game object at a given x position at the top of the screen; used for making formations
+    void SpawnAtPosition(float xPosition, GameObject spawnHazard)
+    {
+        Vector3 spawnPosition = new Vector3(xPosition, spawnValues.y, spawnValues.z);
+        Quaternion spawnRotation = Quaternion.identity;
+        Instantiate(spawnHazard, spawnPosition, spawnRotation);
     }
 }
