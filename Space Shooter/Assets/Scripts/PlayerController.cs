@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
             GetComponent<AudioSource>().Play();
         }
-        if (Input.GetButton("Fire2") && Time.time > nextFire)
+        if (Input.GetButton("Fire2") && Time.time > nextFire && GameObject.FindWithTag("Torpedo") == null)
         {
             nextFire = Time.time + fireRate;
             Instantiate(bomb, shotSpawn.position, shotSpawn.rotation);
