@@ -68,71 +68,74 @@ public class GameController : MonoBehaviour
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
-        while (true) {
-
+        while (true)
+        {
             float waveType = Random.Range(0.0f, 10.0f);
-            if (waveType <= 8.0f)
+            for (int j = 0; j <= 2; j++)
             {
-                // Spawn a number of hazards equal to hazardCount
-                for (int i = 0; i < hazardCount; i++)
+                if (j != 2)
                 {
-                    Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
-                    float typeProbability = Random.Range(0.0f, 10.0f);
-                    Quaternion spawnRotation = Quaternion.identity;
-
-                    // Choose what type of hazard to spawn, with the specific probability
-                    if (typeProbability <= 8.0f)
+                    // Spawn a number of hazards equal to hazardCount
+                    for (int i = 0; i < hazardCount; i++)
                     {
-                        hazard = asteroidHazard;
-                    }
-                    else
-                    {
-                        hazard = enemyHazardRandom;
-                    }
+                        Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+                        float typeProbability = Random.Range(0.0f, 10.0f);
+                        Quaternion spawnRotation = Quaternion.identity;
 
-                    // Make that thang happen
-                    Instantiate(hazard, spawnPosition, spawnRotation);
-                    yield return new WaitForSeconds(spawnWait);
+                        // Choose what type of hazard to spawn, with the specific probability
+                        if (typeProbability <= 8.0f)
+                        {
+                            hazard = asteroidHazard;
+                        }
+                        else
+                        {
+                            hazard = enemyHazardRandom;
+                        }
+
+                        // Make that thang happen
+                        Instantiate(hazard, spawnPosition, spawnRotation);
+                        yield return new WaitForSeconds(spawnWait);
+                    }
+                    // Spawn a pickup
+                    Instantiate(pickup, new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z), Quaternion.identity);
+                    yield return new WaitForSeconds(waveWait);
                 }
-                // Spawn a pickup
-                Instantiate(pickup, new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z), Quaternion.identity);
-                yield return new WaitForSeconds(waveWait);
-            }
-            else
-            {
-                // Spawn a formation of enemies
-                float formationFactor = 5.0f;
-                for (int i = 0; i <= 4; i++)
+                else
                 {
-                    if (i == 0 || i == 4)
+                    // Spawn a formation of enemies
+                    float formationFactor = 5.0f;
+                    for (int i = 0; i <= 4; i++)
                     {
-                        SpawnAtPosition(0.0f * formationFactor, enemyHazardFormation);
-                    }
-                    else if (i == 1 || i == 3)
-                    {
-                        SpawnAtPosition(0.7071f * formationFactor, enemyHazardFormation);
-                        SpawnAtPosition(-0.7071f * formationFactor, enemyHazardFormation);
-                    }
-                    else
-                    {
-                        SpawnAtPosition(1.0f * formationFactor, enemyHazardFormation);
-                        SpawnAtPosition(-1.0f * formationFactor, enemyHazardFormation);
-                    }
-                    yield return new WaitForSeconds(spawnWait);
+                        if (i == 0 || i == 4)
+                        {
+                            SpawnAtPosition(0.0f * formationFactor, enemyHazardFormation);
+                        }
+                        else if (i == 1 || i == 3)
+                        {
+                            SpawnAtPosition(0.7071f * formationFactor, enemyHazardFormation);
+                            SpawnAtPosition(-0.7071f * formationFactor, enemyHazardFormation);
+                        }
+                        else
+                        {
+                            SpawnAtPosition(1.0f * formationFactor, enemyHazardFormation);
+                            SpawnAtPosition(-1.0f * formationFactor, enemyHazardFormation);
+                        }
+                        yield return new WaitForSeconds(spawnWait);
 
+                    }
+
+                    // Spawn a pickup
+                    Instantiate(pickup, new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z), Quaternion.identity);
+                    yield return new WaitForSeconds(waveWait);
                 }
 
-                // Spawn a pickup
-                Instantiate(pickup, new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z), Quaternion.identity);
-                yield return new WaitForSeconds(waveWait);
-            }
-
-            // Restart text waits until the end of the current spawn wave, for finality
-            if (gameOver)
-            {
-                restartText.text = "Press 'R' for restart";
-                restart = true;
-                break;
+                // Restart text waits until the end of the current spawn wave, for finality
+                if (gameOver)
+                {
+                    restartText.text = "Press 'R' for restart";
+                    restart = true;
+                    break;
+                }
             }
         }
     }
